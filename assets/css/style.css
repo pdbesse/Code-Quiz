@@ -1,8 +1,60 @@
-/* body {
+ body {
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     background-color: #3687d9;
-} */
-/* 
-ul {
-    
-} */
+} 
+
+h1 {
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
+}
+
+#startbutton {
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
+}
+
+.quizcontainer {
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    flex-direction: column;
+}
+
+.question {
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
+}
+
+.answerslist {
+    list-style:none; 
+    display: flex; 
+    flex-direction: column;
+}
+
+#a1 {
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
+}
+
+#a2 {
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
+}
+
+#a3 {
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
+}
+
+#a4 {
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
+}
+
