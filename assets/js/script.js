@@ -9,102 +9,40 @@ var a3 = document.querySelector("#a3");
 var a4 = document.querySelector("#a4");
 var timer = document.querySelector(".timer");
 
-var quizQuestions = {
+/* var quizQuestions = {
     q1: "JavaScript is a ________-side programming language.",
     q2: "Which of the following will write the message 'Hello User!' in an alert box?",
     q3: "Which of the following is used to enclose the 'work' a function will do?",
     q4: "Which of the following is a correct 'if' statement to execute certain code if 'x' is equal to 2?",
+} */
+
+var liveQuestion = 1
+
+var quizQuestions = {
+    questions: ["JavaScript is a ________-side programming language.", "Which of the following will write the message 'Hello User!' in an alert box?", "Which of the following is used to enclose the 'work' a function will do?", "Which of the following is a correct 'if' statement to execute certain code if 'x' is equal to 2?"]
 }
 
-var quizAnswers = {
-    q1a1: "client",
-    q1a2: "server",
-    q1a3: "both", // correct
-    q1a4: "none of the above",
-    q2a1: "alertBox(:'Hello User!')",
-    q2a2: "alert(Hello User!)",
-    q2a3: "confirm('Hello User!')",
-    q2a4: "alert('Hello User!')", // correct
-    q3a1: "{}", // correct
-    q3a2: "()",
-    q3a3: "[]",
-    q3a4: "//",
-    q4a1: "if (x=2",
-    q4a2: "if (x==2)", // correct
-    q4a3: "if (!x=2)",
-    q4a4: "if (x=2_",
-}
+/* var quizAnswers = {
+    answers: ["client", "server", "both", "none of the above", "alertBox(:'Hello User!')", "alert(Hello User!)", "confirm('Hello User!')",
+    "alert('Hello User!')", "{}", "()", "[]", "//", "if (x=2", "if (x==2)", "if (!x=2)", "if (x=2_"]
+} */
 
-/* var q1Answers = {
-    q1a1: "client", isCorrect: false,
-    q1a2: "server", isCorrect: false,
-    q1a3: "both", isCorrect: true,
-    q1a4: "none of the above", isCorrect: false,}
+quizAnswers = [{answers: ["client", "server", "both", "none of the above",], answer: "both"}, {answers: ["alertBox(:'Hello User!')", "alert(Hello User!)", "confirm('Hello User!')",
+"alert('Hello User!')",], answer: "alert('Hello User!')"}, {answers: ["{}", "()", "[]", "//",], answer: "{}"}, {answers: ["if (x=2", "if (x==2)", "if (!x=2)", "if (x=2_",], answer: "if (x==2"}]
 
-var q2Answers = {
-    q2a1: "alertBox(:'Hello User!')", isCorrect: false,
-    q2a2: "alert(Hello User!)", isCorrect: false,
-    q2a3: "confirm('Hello User!')", isCorrect: false,
-    q2a4: "alert('Hello User!')", isCorrect: true,}
-    
-var q3Answers = {
-    q3a1: "{}", isCorrect: true,
-    q3a2: "()", isCorrect: false,
-    q3a3: "[]", isCorrect: false,
-    q3a4: "//", isCorrect: false,}
+console.log(quizAnswers[0].answers)
 
-var q4Answers = {
-    q4a1: "if (x=2)", isCorrect: false,
-    q4a2: "if (x==2)", isCorrect: true,
-    q4a3: "if (!x=2)", isCorrect: false,
-    q4a4: "if (x=2)", isCorrect: false,
-}
- */
-
-var trueFalse = {
-    true: true,
-    false: false,
-}
-
-var currentQ = 0;
-var prevQ = quizQuestions.length - 1;
+/* var currentQ = 0;
+var prevQ = quizQuestions.length - 1; */
 
 startButton.addEventListener("click", function Quiz(){
-    quest.textContent = quizQuestions.q1;
-    a1.textContent = quizAnswers.q1a1;
-    a2.textContent = quizAnswers.q1a2;
-    a3.textContent = quizAnswers.q1a3;
-    a4.textContent = quizAnswers.q1a4;
+    quest.textContent = quizQuestions.questions[liveQuestion - 1];
+    a1.textContent = quizAnswers[liveQuestion - 1].answers[0];
+    a2.textContent = quizAnswers[liveQuestion - 1].answers[1];
+    a3.textContent = quizAnswers[liveQuestion - 1].answers[2];
+    a4.textContent = quizAnswers[liveQuestion - 1].answers[3];
 
-    /* a1.addEventListener("click", function() {
-        quest.textContent = quizQuestions.q2;
-        a1.textContent = quizAnswers.q2a1;
-        a2.textContent = quizAnswers.q2a2;
-        a3.textContent = quizAnswers.q2a3;
-        a4.textContent = quizAnswers.q2a4;
-    })
-    a2.addEventListener("click", function() {
-        quest.textContent = quizQuestions.q2;
-        a1.textContent = quizAnswers.q2a1;
-        a2.textContent = quizAnswers.q2a2;
-        a3.textContent = quizAnswers.q2a3;
-        a4.textContent = quizAnswers.q2a4;
-    })
-    a3.addEventListener("click", function() {
-        quest.textContent = quizQuestions.q2;
-        a1.textContent = quizAnswers.q2a1;
-        a2.textContent = quizAnswers.q2a2;
-        a3.textContent = quizAnswers.q2a3;
-        a4.textContent = quizAnswers.q2a4;
-    })
-    a4.addEventListener("click", function() {
-        quest.textContent = quizQuestions.q2;
-        a1.textContent = quizAnswers.q2a1;
-        a2.textContent = quizAnswers.q2a2;
-        a3.textContent = quizAnswers.q2a3;
-        a4.textContent = quizAnswers.q2a4;
-    }) */
-    a1.addEventListener("click", function (){
+ /*    a1.addEventListener("click", function (){
         next()
     });
     a2.addEventListener("click", function (){
@@ -115,7 +53,7 @@ startButton.addEventListener("click", function Quiz(){
     });
     a4.addEventListener("click", function (){
         next()
-    });
+    }); */
    
     timerStart()
     
@@ -136,6 +74,7 @@ function timerStart(){
 }
 
 // function to advance question by 1 and answers by 4 from q/a objects
+/* 
 function next(){
     for (var i=0; i < quizQuestions.length; i++){
         quest.textContent = quizQuestions.[i];
@@ -147,7 +86,7 @@ function next(){
         a4.textContent = quizAnswers[i];
     }
 
-}
+} */
 
 
 
