@@ -75,23 +75,53 @@ startButton.addEventListener("click", function Quiz(){
     a2.textContent = quizAnswers.q1a2;
     a3.textContent = quizAnswers.q1a3;
     a4.textContent = quizAnswers.q1a4;
-/*     a1.addEventListener("click", function next(){
 
+    /* a1.addEventListener("click", function() {
+        quest.textContent = quizQuestions.q2;
+        a1.textContent = quizAnswers.q2a1;
+        a2.textContent = quizAnswers.q2a2;
+        a3.textContent = quizAnswers.q2a3;
+        a4.textContent = quizAnswers.q2a4;
+    })
+    a2.addEventListener("click", function() {
+        quest.textContent = quizQuestions.q2;
+        a1.textContent = quizAnswers.q2a1;
+        a2.textContent = quizAnswers.q2a2;
+        a3.textContent = quizAnswers.q2a3;
+        a4.textContent = quizAnswers.q2a4;
+    })
+    a3.addEventListener("click", function() {
+        quest.textContent = quizQuestions.q2;
+        a1.textContent = quizAnswers.q2a1;
+        a2.textContent = quizAnswers.q2a2;
+        a3.textContent = quizAnswers.q2a3;
+        a4.textContent = quizAnswers.q2a4;
+    })
+    a4.addEventListener("click", function() {
+        quest.textContent = quizQuestions.q2;
+        a1.textContent = quizAnswers.q2a1;
+        a2.textContent = quizAnswers.q2a2;
+        a3.textContent = quizAnswers.q2a3;
+        a4.textContent = quizAnswers.q2a4;
+    }) */
+    a1.addEventListener("click", function (){
+        next()
     });
-    a2.addEventListener("click", function next(){
-
+    a2.addEventListener("click", function (){
+        next()
     });
-    a3.addEventListener("click", function next(){
-
+    a3.addEventListener("click", function (){
+        next()
     });
-    a4.addEventListener("click", function next(){
-
-    }); */
+    a4.addEventListener("click", function (){
+        next()
+    });
    
     timerStart()
     
 })
 
+// timer countdown function
 var secondsLeft = 60;
 function timerStart(){
     var timerInterval = setInterval(function() {
@@ -105,9 +135,19 @@ function timerStart(){
     console.log(secondsLeft);
 }
 
-/* function next(){
+// function to advance question by 1 and answers by 4 from q/a objects
+function next(){
+    for (var i=0; i < quizQuestions.length; i++){
+        quest.textContent = quizQuestions.[i];
+    }
+    for (var i=0; i < quizAnswers.length; i+=4) {
+        a1.textContent = quizAnswers[i];
+        a2.textContent = quizAnswers[i];
+        a3.textContent = quizAnswers[i];
+        a4.textContent = quizAnswers[i];
+    }
 
 }
- */
+
 
 
