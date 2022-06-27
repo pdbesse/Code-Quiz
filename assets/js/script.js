@@ -17,8 +17,8 @@ var quizQuestions = {
 quizAnswers = [{answers: ["client", "server", "both", "none of the above",], correct: "both"}, {answers: ["alertBox(:'Hello User!')", "alert(Hello User!)", "confirm('Hello User!')",
 "alert('Hello User!')",], correct: "alert('Hello User!')"}, {answers: ["{}", "()", "[]", "//",], correct: "{}"}, {answers: ["if (x=2", "if (x==2)", "if (!x=2)", "if (x=2_",], correct: "if (x==2"}]
 
-console.log(quizAnswers[0].answers)
-console.log(quizAnswers[0].correct)
+/* console.log(quizAnswers[0].answers)
+console.log(quizAnswers[0].correct) */
 
 /* var currentQ = 0;
 var prevQ = quizQuestions.length - 1; */
@@ -43,18 +43,20 @@ function timerStart(){
         secondsLeft--;
         timer.textContent = secondsLeft;
 
-        if(secondsLeft === 0) {
+        if (secondsLeft <= 0) {
             clearInterval(timerInterval);
+            recordScore();
         }
-    }, 1000)
-    console.log(secondsLeft);
+    }, 1000);
 }
 
+// button clicks advance to next Q+A's
 a1.addEventListener("click", nextQA);
 a2.addEventListener("click", nextQA);
 a3.addEventListener("click", nextQA);
 a4.addEventListener("click", nextQA);
 
+// function to advance to next Q+A's from objects
 function nextQA(){
     liveQuestion = liveQuestion + 1;
     quest.textContent = quizQuestions.questions[liveQuestion - 1];
@@ -66,27 +68,22 @@ function nextQA(){
     confirmAns()
 }
 
+// function to confirm selected answer with true answer
 function confirmAns(){
+    // iterates through quizAnswers to select index
     for (var i = 0; i < quizAnswers.length; i++) {
+    // if quizAnswers.answers[i] != matching 'correct' string, penalize timer
     if (quizAnswers[liveQuestion - 1].answers[i] != quizAnswers[liveQuestion - 1].correct[i])
-        secondsLeft = secondsLeft - 3;
+        secondsLeft = secondsLeft - 10;
     }
 }
 
-// function to advance question by 1 and answers by 4 from q/a objects
-/* 
-function next(){
-    for (var i=0; i < quizQuestions.length; i++){
-        quest.textContent = quizQuestions.[i];
+function recordScore() {
+    if (secondsLeft < 0){
+        secondsLeft = 0;
     }
-    for (var i=0; i < quizAnswers.length; i+=4) {
-        a1.textContent = quizAnswers[i];
-        a2.textContent = quizAnswers[i];
-        a3.textContent = quizAnswers[i];
-        a4.textContent = quizAnswers[i];
-    }
-
-} */
-
-
+    var scoreInitials = prompt("Time is up! Your score is " + secondsLeft + " seconds remaining. Please enter your initials to record your score.");
+    console.log(scoreInitials, secondsLeft);
+    localStorage.setItem(scoreInitials, secondsLeft);
+}
 
