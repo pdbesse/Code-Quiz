@@ -30,7 +30,7 @@ h1 {
 
 .answerslist {
     list-style:none; 
-    display: flex; 
+    display: none; 
     flex-direction: column;
 }
 

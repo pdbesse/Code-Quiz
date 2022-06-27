@@ -26,6 +26,7 @@ var prevQ = quizQuestions.length - 1; */
 startButton.addEventListener("click", start);
 
 function start(){
+    answersList.setAttribute("style", "display:flex");
     quest.textContent = quizQuestions.questions[liveQuestion - 1];
     a1.textContent = quizAnswers[liveQuestion - 1].answers[0];
     a2.textContent = quizAnswers[liveQuestion - 1].answers[1];
@@ -83,7 +84,6 @@ function recordScore() {
         secondsLeft = 0;
     }
     var scoreInitials = prompt("Time is up! Your score is " + secondsLeft + " seconds remaining. Please enter your initials to record your score.");
-    console.log(scoreInitials, secondsLeft);
     localStorage.setItem(scoreInitials, secondsLeft);
 }
 
