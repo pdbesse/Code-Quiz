@@ -14,14 +14,17 @@ var quizQuestions = {
     questions: ["JavaScript is a ________-side programming language.", "Which of the following will write the message 'Hello User!' in an alert box?", "Which of the following is used to enclose the 'work' a function will do?", "Which of the following is a correct 'if' statement to execute certain code if 'x' is equal to 2?"]
 }
 
-quizAnswers = [{answers: ["client", "server", "both", "none of the above",], correct: "both"}, {answers: ["alertBox(:'Hello User!')", "alert(Hello User!)", "confirm('Hello User!')",
-"alert('Hello User!')",], correct: "alert('Hello User!')"}, {answers: ["{}", "()", "[]", "//",], correct: "{}"}, {answers: ["if (x=2", "if (x==2)", "if (!x=2)", "if (x=2_",], correct: "if (x==2"}]
+var quizAnswers = [{answers: ["client", "server", "client and server", "none of the above"], correct: "client and server"}, {answers: ["alertBox(:'Hello User!')", "alert(Hello User!)", "confirm('Hello User!')",
+"alert('Hello User!')"], correct: "alert('Hello User!')"}, {answers: ["{ }", "( )", "[ ]", "/ /"], correct: "{ }"}, {answers: ["if (x=2)", "if (x==2)", "if (!x=2)", "if {x=2}"], correct: "if (x==2)"}]
+
+var a1Selection = a1.textContent;
+var a2Selection = a2.textContent;
+var a3Selection = a3.textContent;
+var a4Selection = a4.textContent;
+var answerSelections = [a1Selection, a2Selection, a3Selection, a4Selection]
 
 /* console.log(quizAnswers[0].answers)
 console.log(quizAnswers[0].correct) */
-
-/* var currentQ = 0;
-var prevQ = quizQuestions.length - 1; */
 
 startButton.addEventListener("click", start);
 
@@ -66,21 +69,42 @@ function nextQA(){
     a3.textContent = quizAnswers[liveQuestion - 1].answers[2];
     a4.textContent = quizAnswers[liveQuestion - 1].answers[3];
 
+  /*   var a1Selection = a1.textContent;
+    var a2Selection = a2.textContent;
+    var a3Selection = a3.textContent;
+    var a4Selection = a4.textContent; */
+    //event listener on button click, creates variable from text content
+    a1.addEventListener("click", answer = a1.textContent);
+    a2.addEventListener("click", answer = a2.textContent);
+    a3.addEventListener("click", answer = a3.textContent);
+    a4.addEventListener("click", answer = a4.textContent);
+
     confirmAns()
 }
 
 // function to confirm selected answer with true answer
-function confirmAns(){
+function confirmAns(answer){
     // iterates through quizAnswers to select index
-    for (var i = 0; i < quizAnswers.length; i++) {
+    /* for (var i = 0, a = 0; i < quizAnswers.length && a < answerSelections.length; i++, a++) { */
     // if quizAnswers.answers[i] != matching 'correct' string, penalize timer
-    if (quizAnswers[liveQuestion - 1].answers[i] != quizAnswers[liveQuestion - 1].correct[i])
-        secondsLeft = secondsLeft - 10;
-    }
+    /* if (answerSelections[a] == quizAnswers[liveQuestion - 1].correct){ */
+        if (answer == quizAnswers[liveQuestion - 1].correct){
+            secondsLeft = secondsLeft + 0;
+            }
+            else 
+            secondsLeft = secondsLeft - 4;
+                
+
+   /*  else (quizAnswers[liveQuestion - 1].answers[i] != quizAnswers[liveQuestion - 1].correct)
+        secondsLeft = secondsLeft - 5; */
+        console.log("-4");
+        
 }
 
+/* quizQuestions.questions[liveQuestion - 1] > 4; */
+
 function recordScore() {
-    if (secondsLeft < 0){
+    if (secondsLeft < 0) {
         secondsLeft = 0;
     }
     var scoreInitials = prompt("Time is up! Your score is " + secondsLeft + " seconds remaining. Please enter your initials to record your score.");
