@@ -7,6 +7,7 @@ var a1 = document.querySelector("#a1");
 var a2 = document.querySelector("#a2");
 var a3 = document.querySelector("#a3");
 var a4 = document.querySelector("#a4");
+var ansBut = document.querySelector(".ansBut")
 var timer = document.querySelector(".timer");
 var liveQuestion = 1;
 
@@ -17,11 +18,11 @@ var quizQuestions = {
 var quizAnswers = [{answers: ["client", "server", "client and server", "none of the above"], correct: "client and server"}, {answers: ["alertBox(:'Hello User!')", "alert(Hello User!)", "confirm('Hello User!')",
 "alert('Hello User!')"], correct: "alert('Hello User!')"}, {answers: ["{ }", "( )", "[ ]", "/ /"], correct: "{ }"}, {answers: ["if (x=2)", "if (x==2)", "if (!x=2)", "if {x=2}"], correct: "if (x==2)"}]
 
-var a1Selection = a1.textContent;
+/* var a1Selection = a1.textContent;
 var a2Selection = a2.textContent;
 var a3Selection = a3.textContent;
 var a4Selection = a4.textContent;
-var answerSelections = [a1Selection, a2Selection, a3Selection, a4Selection]
+var answerSelections = [a1Selection, a2Selection, a3Selection, a4Selection] */
 
 /* console.log(quizAnswers[0].answers)
 console.log(quizAnswers[0].correct) */
@@ -74,12 +75,18 @@ function nextQA(){
     var a3Selection = a3.textContent;
     var a4Selection = a4.textContent; */
     //event listener on button click, creates variable from text content
-    a1.addEventListener("click", answer = a1.textContent);
-    a2.addEventListener("click", answer = a2.textContent);
-    a3.addEventListener("click", answer = a3.textContent);
-    a4.addEventListener("click", answer = a4.textContent);
+    // make function to create answer from text content, call after click
+    a1.addEventListener("click", rememAns);
+    a2.addEventListener("click", rememAns);
+    a3.addEventListener("click", rememAns);
+    a4.addEventListener("click", rememAns);
 
     confirmAns()
+}
+
+function rememAns (){
+    answer = ansBut.textContent;
+    console.log(answer);
 }
 
 // function to confirm selected answer with true answer
