@@ -15,7 +15,9 @@ h1 {
     justify-content: center;
 }
 
-.ansBut
+.ansBut {
+    color: blue;
+}
 
 .quizcontainer {
     display: flex; 

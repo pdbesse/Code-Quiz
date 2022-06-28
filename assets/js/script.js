@@ -7,35 +7,51 @@ var a1 = document.querySelector("#a1");
 var a2 = document.querySelector("#a2");
 var a3 = document.querySelector("#a3");
 var a4 = document.querySelector("#a4");
-var ansBut = document.querySelector(".ansBut")
+/* var ansBut = document.querySelector(".ansBut") */
 var timer = document.querySelector(".timer");
 var liveQuestion = 1;
 
-var quizQuestions = {
-    questions: ["JavaScript is a ________-side programming language.", "Which of the following will write the message 'Hello User!' in an alert box?", "Which of the following is used to enclose the 'work' a function will do?", "Which of the following is a correct 'if' statement to execute certain code if 'x' is equal to 2?"]
-}
+var quizContent = [
+    {   question: "JavaScript is a ________-side programming language.", 
+        answer1: "client", 
+        answer2: "server", 
+        answer3: "client and server", 
+        answer4: "none of the above",
+        correct: "client and server"},
+    {   question: "Which of the following will write the message 'Hello User!' in an alert box?",
+        answer1: "alertBox(:'Hello User!')",
+        answer2: "alert(Hello User!)",
+        answer3: "confirm('Hello User!')",
+        answer4: "alert('Hello User!')",
+        correct: "alert('Hello User!')"},
+    {   question: "Which of the following is used to enclose the 'work' a function will do?",
+        answer1: "{ }", 
+        answer2: "( )", 
+        answer3: "[ ]", 
+        answer4: "/ /",
+        correct: "{ }"},
+    {   question: "Which of the following is a correct 'if' statement to execute certain code if 'x' is equal to 2?",
+        answer1: "if (x=2)", 
+        answer2: "if (x==2)", 
+        answer3: "if (!x=2)", 
+        answer4: "if {x=2}",
+        correct: "if (x==2)"}
+]
 
-var quizAnswers = [{answers: ["client", "server", "client and server", "none of the above"], correct: "client and server"}, {answers: ["alertBox(:'Hello User!')", "alert(Hello User!)", "confirm('Hello User!')",
-"alert('Hello User!')"], correct: "alert('Hello User!')"}, {answers: ["{ }", "( )", "[ ]", "/ /"], correct: "{ }"}, {answers: ["if (x=2)", "if (x==2)", "if (!x=2)", "if {x=2}"], correct: "if (x==2)"}]
-
-/* var a1Selection = a1.textContent;
-var a2Selection = a2.textContent;
-var a3Selection = a3.textContent;
-var a4Selection = a4.textContent;
-var answerSelections = [a1Selection, a2Selection, a3Selection, a4Selection] */
-
-/* console.log(quizAnswers[0].answers)
-console.log(quizAnswers[0].correct) */
+/* console.log(quizContent[liveQuestion - 1].answer1)
+console.log(quizContent[liveQuestion - 1].correct) */
 
 startButton.addEventListener("click", start);
 
 function start(){
     answersList.setAttribute("style", "display:flex");
-    quest.textContent = quizQuestions.questions[liveQuestion - 1];
-    a1.textContent = quizAnswers[liveQuestion - 1].answers[0];
-    a2.textContent = quizAnswers[liveQuestion - 1].answers[1];
-    a3.textContent = quizAnswers[liveQuestion - 1].answers[2];
-    a4.textContent = quizAnswers[liveQuestion - 1].answers[3];
+    quest.textContent = quizContent[liveQuestion - 1].question;
+    a1.textContent = quizContent[liveQuestion - 1].answer1;
+    a2.textContent = quizContent[liveQuestion - 1].answer2;
+    a3.textContent = quizContent[liveQuestion - 1].answer3;
+    a4.textContent = quizContent[liveQuestion - 1].answer4;
+
+    /* console.log(quizContent[0]. answer3) */
    
     timerStart()
     
@@ -63,54 +79,44 @@ a4.addEventListener("click", nextQA);
 
 // function to advance to next Q+A's from objects
 function nextQA(){
-    liveQuestion = liveQuestion + 1;
-    quest.textContent = quizQuestions.questions[liveQuestion - 1];
-    a1.textContent = quizAnswers[liveQuestion - 1].answers[0];
-    a2.textContent = quizAnswers[liveQuestion - 1].answers[1];
-    a3.textContent = quizAnswers[liveQuestion - 1].answers[2];
-    a4.textContent = quizAnswers[liveQuestion - 1].answers[3];
-
-  /*   var a1Selection = a1.textContent;
-    var a2Selection = a2.textContent;
-    var a3Selection = a3.textContent;
-    var a4Selection = a4.textContent; */
-    //event listener on button click, creates variable from text content
-    // make function to create answer from text content, call after click
-    a1.addEventListener("click", rememAns);
-    a2.addEventListener("click", rememAns);
-    a3.addEventListener("click", rememAns);
-    a4.addEventListener("click", rememAns);
-
     confirmAns()
-}
+    
+    liveQuestion = liveQuestion + 1;
+    quest.textContent = quizContent[liveQuestion - 1].question;
+    a1.textContent = quizContent[liveQuestion - 1].answer1;
+    a2.textContent = quizContent[liveQuestion - 1].answer2;
+    a3.textContent = quizContent[liveQuestion - 1].answer3;
+    a4.textContent = quizContent[liveQuestion - 1].answer4;
+    
+    // ends quiz and records score if last question has been reached
 
-function rememAns (){
-    answer = ansBut.textContent;
-    console.log(answer);
+    for (var i = 0; i < quizContent.length; i++) {
+    if ((i + 1) > quizContent.length) {
+        clearInterval(timerInterval)
+        recordScore()
+    }
+}
 }
 
 // function to confirm selected answer with true answer
-function confirmAns(answer){
-    // iterates through quizAnswers to select index
-    /* for (var i = 0, a = 0; i < quizAnswers.length && a < answerSelections.length; i++, a++) { */
-    // if quizAnswers.answers[i] != matching 'correct' string, penalize timer
-    /* if (answerSelections[a] == quizAnswers[liveQuestion - 1].correct){ */
-        if (answer == quizAnswers[liveQuestion - 1].correct){
-            secondsLeft = secondsLeft + 0;
-            }
-            else 
-            secondsLeft = secondsLeft - 4;
-                
-
-   /*  else (quizAnswers[liveQuestion - 1].answers[i] != quizAnswers[liveQuestion - 1].correct)
-        secondsLeft = secondsLeft - 5; */
-        console.log("-4");
-        
+function confirmAns(){
+    if (quizContent[liveQuestion - 1].answer1 == quizContent[liveQuestion - 1].correct){
+        console.log(quizContent[liveQuestion - 1].answer1)
+        secondsLeft = secondsLeft;
+    } else if (quizContent[liveQuestion - 1].answer2 == quizContent[liveQuestion - 1].correct){
+        secondsLeft = secondsLeft;
+    } else if (quizContent[liveQuestion - 1].answer3 == quizContent[liveQuestion - 1].correct){
+        secondsLeft = secondsLeft;
+    } else if (quizContent[liveQuestion - 1].answer4 == quizContent[liveQuestion - 1].correct){
+        secondsLeft = secondsLeft;
+    } else {
+        secondsLeft = secondsLeft - 15;
+    }
 }
 
-/* quizQuestions.questions[liveQuestion - 1] > 4; */
-
+// triggers prompt window to record initials and score; makes < 0 = 0
 function recordScore() {
+    answersList.setAttribute("style", "display:flex");
     if (secondsLeft < 0) {
         secondsLeft = 0;
     }
