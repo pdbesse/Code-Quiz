@@ -72,15 +72,63 @@ function timerStart(){
 }
 
 // button clicks advance to next Q+A's
-a1.addEventListener("click", nextQA);
-a2.addEventListener("click", nextQA);
-a3.addEventListener("click", nextQA);
-a4.addEventListener("click", nextQA);
+a1.addEventListener("click", function(event){
+    var selectedAns = event.target.textContent;
+    console.log(selectedAns);
+    if (selectedAns == quizContent[liveQuestion - 1].correct){
+        secondsLeft = secondsLeft;
+    } else {
+        secondsLeft = secondsLeft - 15;
+    }
+    nextQA()
+})
+
+a2.addEventListener("click", function(event){
+    var selectedAns = event.target.textContent;
+    console.log(selectedAns);
+    if (selectedAns == quizContent[liveQuestion - 1].correct){
+        secondsLeft = secondsLeft;
+    } else {
+        secondsLeft = secondsLeft - 15;
+    }
+    nextQA()
+})
+
+a3.addEventListener("click", function(event){
+    var selectedAns = event.target.textContent;
+    console.log(selectedAns);
+    if (selectedAns == quizContent[liveQuestion - 1].correct){
+        secondsLeft = secondsLeft;
+    } else {
+        secondsLeft = secondsLeft - 15;
+    }
+    nextQA()
+})
+
+a4.addEventListener("click", function(event){
+    var selectedAns = event.target.textContent;
+    console.log(selectedAns);
+    if (selectedAns == quizContent[liveQuestion - 1].correct){
+        secondsLeft = secondsLeft;
+    } else {
+        secondsLeft = secondsLeft - 15;
+    }
+    nextQA()
+})
+/* a2.addEventListener("click", function(event){
+
+}
+a3.addEventListener("click", function(event){
+
+}
+a4.addEventListener("click", function(event){
+
+} */
 
 // function to advance to next Q+A's from objects
+// handler
+// event.target
 function nextQA(){
-    confirmAns()
-    
     liveQuestion = liveQuestion + 1;
     quest.textContent = quizContent[liveQuestion - 1].question;
     a1.textContent = quizContent[liveQuestion - 1].answer1;
@@ -90,16 +138,26 @@ function nextQA(){
     
     // ends quiz and records score if last question has been reached
 
-    for (var i = 0; i < quizContent.length; i++) {
-    if ((i + 1) > quizContent.length) {
+    /* for (var i = 0; i < quizContent.length; i++) { */
+    // move 
+    /* if ((liveQuestion  quizContent.length) {
         clearInterval(timerInterval)
         recordScore()
-    }
+    } */
+/* } */
 }
-}
-
+// need to point to button somehow; this just applies to object
 // function to confirm selected answer with true answer
-function confirmAns(){
+
+/* function confirmAns(){
+    if (selectedAns == quizContent[liveQuestion - 1].correct){
+        secondsLeft = secondsLeft;
+    } else {
+        secondsLeft = secondsLeft - 15;
+    }
+} */
+
+/* function confirmAns(){
     if (quizContent[liveQuestion - 1].answer1 == quizContent[liveQuestion - 1].correct){
         console.log(quizContent[liveQuestion - 1].answer1)
         secondsLeft = secondsLeft;
@@ -112,10 +170,10 @@ function confirmAns(){
     } else {
         secondsLeft = secondsLeft - 15;
     }
-}
+} */
 
 // triggers prompt window to record initials and score; makes < 0 = 0
-function recordScore() {
+/* function recordScore() {
     answersList.setAttribute("style", "display:flex");
     if (secondsLeft < 0) {
         secondsLeft = 0;
@@ -123,4 +181,4 @@ function recordScore() {
     var scoreInitials = prompt("Time is up! Your score is " + secondsLeft + " seconds remaining. Please enter your initials to record your score.");
     localStorage.setItem(scoreInitials, secondsLeft);
 }
-
+*/
