@@ -13,10 +13,10 @@ h1 {
     display: flex; 
     align-items: center; 
     justify-content: center;
-}
-
-.ansBut {
-    color: blue;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    margin: 5px;
+    font-size: 20px;
 }
 
 .quizcontainer {
@@ -38,28 +38,44 @@ h1 {
     flex-direction: column;
 }
 
+ul button {
+    font-size: 15px;
+}
+
 #a1 {
     display: flex; 
     align-items: center; 
     justify-content: center;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    margin: 5px;
 }
 
 #a2 {
     display: flex; 
     align-items: center; 
     justify-content: center;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    margin: 5px;
 }
 
 #a3 {
     display: flex; 
     align-items: center; 
     justify-content: center;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    margin: 5px;
 }
 
 #a4 {
     display: flex; 
     align-items: center; 
     justify-content: center;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    margin: 5px;
 }
 
 .timer {

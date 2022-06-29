@@ -23,66 +23,106 @@ This website contains a short quiz designed to test basic Javascript knowledge. 
 
 Upon clicking one of the answer buttons, the countdown will deduct time remaining for an incorrect answer. The next question and series of possible answers will populate as well.
 
-If the timer reaches 0, or the user reaches the conclusion of the quiz, the user will be prompted to enter his or her initials to record the score (seconds remaining) in the page's local storage.
+If the timer reaches 0, or the user reaches the conclusion of the quiz, the user will be prompted to enter his or her initials to record the score (seconds remaining) in the browser's local storage.
 
 ![Usage GIF](./assets/usage.gif)
 
 ### Code Snippets
 
 ```
-const lowChar = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"]
-const upperChar = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","UV","W","X","Y","Z"]
-const numbers = ["0","1","2","3","4","5","6","7","8","9"]
-const symbols = ["!","@","#","$","%","^","&","*","(",")","[","]"]
+var quizContent = [
+    {   question: "JavaScript is a ________-side programming language.", 
+        answer1: "client", 
+        answer2: "server", 
+        answer3: "client and server", 
+        answer4: "none of the above",
+        correct: "client and server"},
+    {   question: "Which of the following will write the message 'Hello User!' in an alert box?",
+        answer1: "alertBox(:'Hello User!')",
+        answer2: "alert(Hello User!)",
+        answer3: "confirm('Hello User!')",
+        answer4: "alert('Hello User!')",
+        correct: "alert('Hello User!')"},
+    {   question: "Which of the following is used to enclose the 'work' a function will do?",
+        answer1: "{ }", 
+        answer2: "( )", 
+        answer3: "[ ]", 
+        answer4: "/ /",
+        correct: "{ }"},
+    {   question: "Which of the following is a correct 'if' statement to execute certain code if 'x' is equal to 2?",
+        answer1: "if (x=2)", 
+        answer2: "if (x==2)", 
+        answer3: "if (!x=2)", 
+        answer4: "if {x=2}",
+        correct: "if (x==2)"}
+]
 ```
 
-This code block creats global arrays of the four character selection types: lower case, upper case, numbers, and symbols.
+This code block creates an array of objects. Each object contains a question and corresponding answers, as well as the correct answer.
 
 ```
-  var confirmLength = prompt("Choose a password length.")
-    if (confirmLength < 8) {
-      return alert("Password must be between 8 and 128 characters.");
-    } else if (confirmLength > 128) {
-      return alert("Password must be between 8 and 128 characters.");
-    } else if (confirmLength >= 8 <= 128) {
-      var confirmLow = confirm("Do you want to use lowercase letters?")
-      var confirmUp = confirm("Do you want to use uppercase letters?")
-      var confirmNum = confirm("Do you want to use numbers?")
-      var confirmSym = confirm("Do you want to use special characters?")
-        if (!confirmLow && !confirmUp && !confirmNum && !confirmSym) {
-          return alert("You must select at least one character set!");
-            }
+var secondsLeft = 60;
+function timerStart(){
+    var timerInterval = setInterval(function() {
+        secondsLeft--;
+        timer.textContent = secondsLeft + " seconds remaining...";
+
+        if (secondsLeft <= 0 || liveQuestion == 5) {
+            // stop timer and record score 
+            clearInterval(timerInterval);
+            recordScore();
+        }
+    }, 1000);
+}
+```
+
+This function starts a 60 second countdown timer and loads it into the timer box. To end the game, if the timer is less than or equal to zero, or the end of the quiz content array is reached, the recordScore function is executed.
+
+```
+a1.addEventListener("click", function(event){
+    var selectedAns = event.target.textContent;
+    if (selectedAns == quizContent[liveQuestion - 1].correct){
+        secondsLeft = secondsLeft;
+    } else {
+        secondsLeft = secondsLeft - 15;
     }
-```
-This code block prompts the user to choose a password length, returning an alert that the password must be between 8 and 128 characters if that condition is not met. It saves the inputted value in the var confirmLength, which comes into play later.
-
-It then asks a series of confirmation questions, creationg a true/false value for each answer. If no selections are made, it returns an alert that at least one character set must be chosen.
-
-```
-var preRandPW = []
-    if (confirmLow) {
-      preRandPW = preRandPW.concat(lowChar)}
-    if (confirmUp) {
-      preRandPW = preRandPW.concat(upperChar)}
-    if (confirmNum) {
-      preRandPW = preRandPW.concat(numbers)}
-    if (confirmSym) {
-      preRandPW = preRandPW.concat(symbols)
+    if (liveQuestion < 5) {
+     nextQA()
     }
+})
 ```
 
-This code block creates the empty array preRandPW, and for each true value from the confirmation prompt, concatinates the corresponding character selection array into the empty array preRandPW.
+This code block is repeated for each answer button. Upon clicking the button, a variable is created from the text content within the clicked button. If the text content matches the current object's 'correct' key value, no time is deducted from the countdown. If it does not match, 15 seconds are deducted.
+
+If the current question is not yet at the end of the array, the nextQA function is executed.
 
 ```
-var genPW = ""
-    for (var i = 0; i < confirmLength; i++) {
+function nextQA(){
+    liveQuestion = liveQuestion + 1;
+    quest.textContent = quizContent[liveQuestion - 1].question;
+    a1.textContent = quizContent[liveQuestion - 1].answer1;
+    a2.textContent = quizContent[liveQuestion - 1].answer2;
+    a3.textContent = quizContent[liveQuestion - 1].answer3;
+    a4.textContent = quizContent[liveQuestion - 1].answer4;
+}
+```
 
-    genPW = genPW + preRandPW[Math.floor(Math.random() * preRandPW.length)];
+This function takes the previous liveQuestion value and adds 1 to it.  It then loads into the question box and each answer option button the corresponding key value from the next object.
+
+```
+function recordScore() {
+    answersList.setAttribute("style", "display:none");
+    if (secondsLeft < 0) {
+        secondsLeft = 0;
     }
-    return genPW;
+    var scoreInitials = prompt("Time is up! Your score is " + secondsLeft + " seconds remaining. Please enter your initials to record your score.");
+    localStorage.setItem(scoreInitials, secondsLeft);
+    window.location.reload();
+}
+
 ```
 
-This code block creates a new empty string called genPW. It then runs a 'for loop' n times, where n = the value assied to confirmLength in the prompt. Each time the loop runs, it pulls a random element from the preRandPW array and adds it to the string genPW. Finally, it returns the randomly generated password to the window.
+This function hides the answer buttons. It then converts the user's score to 0 if the timer was less than 0. Next, it display's the user's score and prompts the user for his or her initials. It loads these into the browser's local storage, and ends by loading the page.
 
 ## Technology
 
@@ -92,21 +132,20 @@ Technology Used:
 * [Visual Studio Code](https://code.visualstudio.com/)
 * [Javascipt](https://www.javascript.com/)
 * [HTML](https://developer.mozilla.org/en-US/docs/Web/HTML)
+* [W3 CSS](https://www.w3.org/Style/CSS/Overview.en.html)
 
 ## Credits
 
-All coding credited to Phillip Besse.  Javascript pseudocoded with Sufyaan Vaidya.
+All coding credited to Phillip Besse.  Javascript pseudocoded with Maverick Wong, Brandon Espinosa, and Manuel Nunes.
+
+Questions and answers credited to [Data Flair Javascript Quiz](https://data-flair.training/blogs/javascript-quiz/).
 
 Websites Referenced:
 * [W3 Schools - Arrays](https://www.w3schools.com/js/js_arrays.asp)
 * [W3 Schools - Functions](https://www.w3schools.com/js/js_functions.asp)
-* [W3 Schools - JS Operators](https://www.w3schools.com/js/js_operators.asp)
-* [W3 Schools - For Loops](https://www.w3schools.com/js/js_loop_for.asp)
-* [W3 Schools - Math.random](https://www.w3schools.com/js/js_random.asp)
-* [W3 Schools - Math.floor](https://www.w3schools.com/jsref/jsref_floor.asp)
-* [W3 Schools - concatenate](https://www.w3schools.com/jsref/jsref_concat_string.asp)
-* [GeeksforGeeks](https://www.geeksforgeeks.org/how-to-generate-a-random-password-using-javascript/)
-* [Javascript.info Alert, Prompt, Confirm](https://javascript.info/alert-prompt-confirm)
+* [W3 Schools - Objects](https://www.w3schools.com/js/js_objects.asp)
+* [MDN Web Docs - local.Storage](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage)
+* [Stack Overflow - Hide HTML Element](https://stackoverflow.com/questions/67332269/javascript-html-hide-div-until-button-click)
 
 ## License
 

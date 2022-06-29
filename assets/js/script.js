@@ -7,10 +7,11 @@ var a1 = document.querySelector("#a1");
 var a2 = document.querySelector("#a2");
 var a3 = document.querySelector("#a3");
 var a4 = document.querySelector("#a4");
-/* var ansBut = document.querySelector(".ansBut") */
 var timer = document.querySelector(".timer");
 var liveQuestion = 0;
 
+// creates quiz content in an array; each object within array contains question, 
+// answer options, and the correct answer
 var quizContent = [
     {   question: "JavaScript is a ________-side programming language.", 
         answer1: "client", 
@@ -38,16 +39,17 @@ var quizContent = [
         correct: "if (x==2)"}
 ]
 
-/* console.log(quizContent[liveQuestion - 1].answer1)
-console.log(quizContent[liveQuestion - 1].correct) */
-
+// listens for start button click
 startButton.addEventListener("click", start);
 
+// start quiz function
 function start(){
+    // reveals answer buttons
     answersList.setAttribute("style", "display:flex");
+    //loads next question and answer options
     nextQA()
+    // starts timer
     timerStart()
-    
 }
 
 // timer countdown function
@@ -57,87 +59,113 @@ function timerStart(){
         secondsLeft--;
         timer.textContent = secondsLeft + " seconds remaining...";
 
-        if (secondsLeft <= 0 || liveQuestion == 5) /* ((quizContent[liveQuestion - 1]) > quizContent.length)) */ {
-            
+        // if the timer reaches zero or the live question reaches the end of the array
+        if (secondsLeft <= 0 || liveQuestion == 5) {
+            // stop timer and record score 
             clearInterval(timerInterval);
             recordScore();
         }
     }, 1000);
 }
 
-// button clicks advance to next Q+A's
+// listen for click on a1 button
 a1.addEventListener("click", function(event){
+    // create variable from text content of clicked button
     var selectedAns = event.target.textContent;
-   /*  console.log(selectedAns); */
+    // if the text content of clicked button == the correct key value, no timer penalty
     if (selectedAns == quizContent[liveQuestion - 1].correct){
         secondsLeft = secondsLeft;
+      // if the text content of clicked button !== the correct key value (wrong answer given), 
+      // deduct 15 seconds from timer
     } else {
         secondsLeft = secondsLeft - 15;
     }
+    // if live question is not yet at the end of the array, load next question and answer options
     if (liveQuestion < 5) {
      nextQA()
     }
 })
 
 a2.addEventListener("click", function(event){
+    // create variable from text content of clicked button
     var selectedAns = event.target.textContent;
-    console.log(selectedAns);
+    // if the text content of clicked button == the correct key value, no timer penalty
     if (selectedAns == quizContent[liveQuestion - 1].correct){
         secondsLeft = secondsLeft;
+      // if the text content of clicked button !== the correct key value (wrong answer given), 
+      // deduct 15 seconds from timer
     } else {
         secondsLeft = secondsLeft - 15;
     }
+    // if live question is not yet at the end of the array, load next question and answer options
     if (liveQuestion < 5) {
-        nextQA()
+     nextQA()
     }
 })
 
 a3.addEventListener("click", function(event){
+    // create variable from text content of clicked button
     var selectedAns = event.target.textContent;
-    console.log(selectedAns);
+    // if the text content of clicked button == the correct key value, no timer penalty
     if (selectedAns == quizContent[liveQuestion - 1].correct){
         secondsLeft = secondsLeft;
+      // if the text content of clicked button !== the correct key value (wrong answer given), 
+      // deduct 15 seconds from timer
     } else {
         secondsLeft = secondsLeft - 15;
     }
+    // if live question is not yet at the end of the array, load next question and answer options
     if (liveQuestion < 5) {
-        nextQA()
+     nextQA()
     }
 })
 
 a4.addEventListener("click", function(event){
+    // create variable from text content of clicked button
     var selectedAns = event.target.textContent;
-    console.log(selectedAns);
+    // if the text content of clicked button == the correct key value, no timer penalty
     if (selectedAns == quizContent[liveQuestion - 1].correct){
         secondsLeft = secondsLeft;
+      // if the text content of clicked button !== the correct key value (wrong answer given), 
+      // deduct 15 seconds from timer
     } else {
         secondsLeft = secondsLeft - 15;
     }
+    // if live question is not yet at the end of the array, load next question and answer options
     if (liveQuestion < 5) {
-        nextQA()
+     nextQA()
     }
 })
 
-// function to advance to next Q+A's from objects
-// handler
-// event.target
+// function to load next question and answer options
 function nextQA(){
+    // add 1 to live question value
     liveQuestion = liveQuestion + 1;
+    // load question from the next object into question element
     quest.textContent = quizContent[liveQuestion - 1].question;
+    // load answer option 1 from the next object into a1 button
     a1.textContent = quizContent[liveQuestion - 1].answer1;
+    // load answer option 2 from the next object into a2 button
     a2.textContent = quizContent[liveQuestion - 1].answer2;
+    // load answer option 3 from the next object into a3 button
     a3.textContent = quizContent[liveQuestion - 1].answer3;
+    // load answer option 4 from the next object into a4 button
     a4.textContent = quizContent[liveQuestion - 1].answer4;
-}
+}   
 
-// triggers prompt window to record initials and score; makes < 0 = 0
+// function to record score
 function recordScore() {
+    // hide answer buttons
     answersList.setAttribute("style", "display:none");
+    // if timer < 0, make timer = 0
     if (secondsLeft < 0) {
         secondsLeft = 0;
     }
+    // prompt player for initials to record score
     var scoreInitials = prompt("Time is up! Your score is " + secondsLeft + " seconds remaining. Please enter your initials to record your score.");
+    // store player initials and score in local storage
     localStorage.setItem(scoreInitials, secondsLeft);
-    console.log("test")
+    // reload window
+    window.location.reload();
 }
 
