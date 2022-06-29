@@ -9,7 +9,7 @@ var a3 = document.querySelector("#a3");
 var a4 = document.querySelector("#a4");
 /* var ansBut = document.querySelector(".ansBut") */
 var timer = document.querySelector(".timer");
-var liveQuestion = 1;
+var liveQuestion = 0;
 
 var quizContent = [
     {   question: "JavaScript is a ________-side programming language.", 
@@ -45,14 +45,7 @@ startButton.addEventListener("click", start);
 
 function start(){
     answersList.setAttribute("style", "display:flex");
-    quest.textContent = quizContent[liveQuestion - 1].question;
-    a1.textContent = quizContent[liveQuestion - 1].answer1;
-    a2.textContent = quizContent[liveQuestion - 1].answer2;
-    a3.textContent = quizContent[liveQuestion - 1].answer3;
-    a4.textContent = quizContent[liveQuestion - 1].answer4;
-
-    /* console.log(quizContent[0]. answer3) */
-   
+    nextQA()
     timerStart()
     
 }
@@ -62,9 +55,10 @@ var secondsLeft = 60;
 function timerStart(){
     var timerInterval = setInterval(function() {
         secondsLeft--;
-        timer.textContent = secondsLeft;
+        timer.textContent = secondsLeft + " seconds remaining...";
 
-        if (secondsLeft <= 0) {
+        if (secondsLeft <= 0 || liveQuestion == 5) /* ((quizContent[liveQuestion - 1]) > quizContent.length)) */ {
+            
             clearInterval(timerInterval);
             recordScore();
         }
@@ -74,13 +68,15 @@ function timerStart(){
 // button clicks advance to next Q+A's
 a1.addEventListener("click", function(event){
     var selectedAns = event.target.textContent;
-    console.log(selectedAns);
+   /*  console.log(selectedAns); */
     if (selectedAns == quizContent[liveQuestion - 1].correct){
         secondsLeft = secondsLeft;
     } else {
         secondsLeft = secondsLeft - 15;
     }
-    nextQA()
+    if (liveQuestion < 5) {
+     nextQA()
+    }
 })
 
 a2.addEventListener("click", function(event){
@@ -91,7 +87,9 @@ a2.addEventListener("click", function(event){
     } else {
         secondsLeft = secondsLeft - 15;
     }
-    nextQA()
+    if (liveQuestion < 5) {
+        nextQA()
+    }
 })
 
 a3.addEventListener("click", function(event){
@@ -102,7 +100,9 @@ a3.addEventListener("click", function(event){
     } else {
         secondsLeft = secondsLeft - 15;
     }
-    nextQA()
+    if (liveQuestion < 5) {
+        nextQA()
+    }
 })
 
 a4.addEventListener("click", function(event){
@@ -113,17 +113,10 @@ a4.addEventListener("click", function(event){
     } else {
         secondsLeft = secondsLeft - 15;
     }
-    nextQA()
+    if (liveQuestion < 5) {
+        nextQA()
+    }
 })
-/* a2.addEventListener("click", function(event){
-
-}
-a3.addEventListener("click", function(event){
-
-}
-a4.addEventListener("click", function(event){
-
-} */
 
 // function to advance to next Q+A's from objects
 // handler
@@ -135,50 +128,16 @@ function nextQA(){
     a2.textContent = quizContent[liveQuestion - 1].answer2;
     a3.textContent = quizContent[liveQuestion - 1].answer3;
     a4.textContent = quizContent[liveQuestion - 1].answer4;
-    
-    // ends quiz and records score if last question has been reached
-
-    /* for (var i = 0; i < quizContent.length; i++) { */
-    // move 
-    /* if ((liveQuestion  quizContent.length) {
-        clearInterval(timerInterval)
-        recordScore()
-    } */
-/* } */
 }
-// need to point to button somehow; this just applies to object
-// function to confirm selected answer with true answer
-
-/* function confirmAns(){
-    if (selectedAns == quizContent[liveQuestion - 1].correct){
-        secondsLeft = secondsLeft;
-    } else {
-        secondsLeft = secondsLeft - 15;
-    }
-} */
-
-/* function confirmAns(){
-    if (quizContent[liveQuestion - 1].answer1 == quizContent[liveQuestion - 1].correct){
-        console.log(quizContent[liveQuestion - 1].answer1)
-        secondsLeft = secondsLeft;
-    } else if (quizContent[liveQuestion - 1].answer2 == quizContent[liveQuestion - 1].correct){
-        secondsLeft = secondsLeft;
-    } else if (quizContent[liveQuestion - 1].answer3 == quizContent[liveQuestion - 1].correct){
-        secondsLeft = secondsLeft;
-    } else if (quizContent[liveQuestion - 1].answer4 == quizContent[liveQuestion - 1].correct){
-        secondsLeft = secondsLeft;
-    } else {
-        secondsLeft = secondsLeft - 15;
-    }
-} */
 
 // triggers prompt window to record initials and score; makes < 0 = 0
-/* function recordScore() {
-    answersList.setAttribute("style", "display:flex");
+function recordScore() {
+    answersList.setAttribute("style", "display:none");
     if (secondsLeft < 0) {
         secondsLeft = 0;
     }
     var scoreInitials = prompt("Time is up! Your score is " + secondsLeft + " seconds remaining. Please enter your initials to record your score.");
     localStorage.setItem(scoreInitials, secondsLeft);
+    console.log("test")
 }
-*/
+
